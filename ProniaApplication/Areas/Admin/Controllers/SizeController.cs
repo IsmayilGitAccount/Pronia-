@@ -44,7 +44,7 @@ namespace ProniaApplication.Areas.Admin.Controllers
                 return View();
             }
 
-            Size size = new Size() 
+            Models.Size size = new Size() 
             { 
                 SizeName = sizeVM.SizeName
             };

@@ -1,5 +1,5 @@
-﻿@using ProniaApplication.Areas.Admin.Models
-@model List<AdminOrder> 
+﻿@using ProniaApplication.Areas.ViewModels
+@model List<BasketItemVM>
 
 <div class="row">
     <div class="col-md-12 grid-margin">
@@ -238,26 +238,34 @@
                     <table id="recent-purchases-listing" class="table">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Status report</th>
-                                <th>Office</th>
+
+
+                                <th>Product Name</th>
                                 <th>Price</th>
-                                <th>Date</th>
-                                <th>Gross amount</th>
+                                <th>Product Count</th>
+                                <th>Total Price</th>
+
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
+                            @foreach (BasketItemVM itemVM in Model)
                             {
+                               
                                 <tr>
-                                    <td>@item.ProductName</td>
-                                    <td>@item.Count</td>
-                                    <td>$@item.ProductPrice</td>
-                                    <td>$@item.TotalPrice</td>
-                                    <td>@item.CreatedAt</td>
+
+
+                                    <td>@itemVM.Name</td>
+                                    <td>$@itemVM.Price</td>
+                                    <td>
+                                        @itemVM.Count
+                                    </td>
+                                    <td>
+                                        @itemVM.Subtotal
+                                    </td>
+                                    
                                 </tr>
                             }
-                            
+                         
                         </tbody>
                     </table>
                 </div>

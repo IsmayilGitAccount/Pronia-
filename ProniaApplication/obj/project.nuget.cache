@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3MXV9n7E4NI=",
+  "dgSpecHash": "grfb4HwKIHE=",
   "success": true,
-  "projectFilePath": "C:\\Users\\ASUS TUF\\Desktop\\Pronia\\ProniaApplication\\ProniaApplication.csproj",
+  "projectFilePath": "C:\\Users\\ASUS TUF\\Desktop\\Pronia, AddBasket database\\ProniaApplication\\ProniaApplication.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ASUS TUF\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\ASUS TUF\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

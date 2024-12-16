@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProniaApplication.DAL;
 using ProniaApplication.Models;
+using ProniaApplication.Utilities.Exceptions;
 using ProniaApplication.ViewModels;
 
 namespace ProniaApplication.Controllers
@@ -21,7 +22,7 @@ namespace ProniaApplication.Controllers
 
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || id <= 0) return BadRequest();
+            if (id == null || id <= 0) throw new BadRequestException($"There are no any product with {id}");
 
             Product? product = await _context.Products
                 .Include(p=>p.productsImages
@@ -35,8 +36,7 @@ namespace ProniaApplication.Controllers
                 .ThenInclude(pt=>pt.Tag)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
-            if(product == null) return NotFound();
-            if (id == null) return NotFound();
+            if (product == null) throw new NotFoundException($"Not Found product with {id}!");
 
             DetailsVM detailsVM = new DetailsVM
             {

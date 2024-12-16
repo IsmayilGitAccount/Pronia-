@@ -46,7 +46,7 @@ namespace ProniaApplication.Areas.Admin.Controllers
                 return View();
             }
 
-            Color color = new()
+            Models.Color color = new()
             {
                 Name = colorVM.Name
             };

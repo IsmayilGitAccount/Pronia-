@@ -7776,11 +7776,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ASUS TUF\\Desktop\\Pronia\\ProniaApplication\\ProniaApplication.csproj",
+      "projectUniqueName": "C:\\Users\\ASUS TUF\\Desktop\\Pronia, AddBasket database\\ProniaApplication\\ProniaApplication.csproj",
       "projectName": "ProniaApplication",
-      "projectPath": "C:\\Users\\ASUS TUF\\Desktop\\Pronia\\ProniaApplication\\ProniaApplication.csproj",
+      "projectPath": "C:\\Users\\ASUS TUF\\Desktop\\Pronia, AddBasket database\\ProniaApplication\\ProniaApplication.csproj",
       "packagesPath": "C:\\Users\\ASUS TUF\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ASUS TUF\\Desktop\\Pronia\\ProniaApplication\\obj\\",
+      "outputPath": "C:\\Users\\ASUS TUF\\Desktop\\Pronia, AddBasket database\\ProniaApplication\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -13,7 +13,7 @@ using static System.Net.Mime.MediaTypeNames;
 namespace ProniaApplication.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin, Moderator")]
+    //[Authorize(Roles = "Admin, Moderator")]
     public class ProductController : Controller
     {
         public AppDBContext _context { get; }
@@ -26,9 +26,23 @@ namespace ProniaApplication.Areas.Admin.Controllers
 
         string Root = Path.Combine("assets", "images", "website-images");
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
+            if(page < 1) return BadRequest();
+
+            int count = await _context.Products.CountAsync();
+
+            //ViewBag.TotalPage = Math.Ceiling((double)count / 2);
+
+            double total = Math.Ceiling((double)count / 2);
+
+            if (page > ViewBag.TotalPage) return BadRequest();
+
+            ViewBag.CurrentPage = page;
+
             List<GetProductAdminVM> productsVMs = await _context.Products
+                .Skip((page-1)*2)
+                .Take(2)
                 .Include(p => p.category)
                 .Include(p => p.productsImages.Where(pi => pi.IsPrimary == true))
                 .Select(p => new GetProductAdminVM
@@ -42,7 +56,13 @@ namespace ProniaApplication.Areas.Admin.Controllers
                 )
                 .ToListAsync();
 
-            return View(productsVMs);
+            PaginateVM<GetProductAdminVM> paginateVM = new() { 
+                CurrentPage = page,
+                TotalPage = total,
+                Items = productsVMs
+            };
+
+            return View(paginateVM);
         }
 
         
@@ -149,9 +169,6 @@ namespace ProniaApplication.Areas.Admin.Controllers
                 CreatedAt = DateTime.Now,
                 IsDeleted = false
             };
-
-
-
 
 
             Product product = new()

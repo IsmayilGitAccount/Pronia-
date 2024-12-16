@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProniaApplication.DAL;
+using ProniaApplication.Middleware;
 using ProniaApplication.Models;
 using ProniaApplication.Services.Impelementations;
+using ProniaApplication.Services.Implementations;
 using ProniaApplication.Services.Interfaces;
 
 namespace ProniaApplication
@@ -30,12 +32,14 @@ namespace ProniaApplication
                 ).AddEntityFrameworkStores<AppDBContext>().AddDefaultTokenProviders();
 
             builder.Services.AddScoped<ILayoutService,LayoutService>();
+            builder.Services.AddScoped<IBasketService,BasketService>();
             var app = builder.Build();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseStaticFiles();
+            app.UseMiddleware<GlobalExceptionHandleMiddleware>();
 
             app.MapControllerRoute(
                name: "admin",
