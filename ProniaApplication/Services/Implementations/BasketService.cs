@@ -11,8 +11,8 @@ using static System.Net.WebRequestMethods;
 
 namespace ProniaApplication.Services.Implementations
 {
-    
-    public class BasketService:IBasketService
+
+    public class BasketService : IBasketService
     {
         private readonly AppDBContext _context;
         private readonly ClaimsPrincipal _user;
@@ -22,10 +22,10 @@ namespace ProniaApplication.Services.Implementations
             _context = context;
             _http = http;
             _user = http.HttpContext.User;
-            
+
         }
 
-        
+
 
         public async Task<List<BasketItemVM>> GetBasketAsync()
         {
@@ -57,26 +57,38 @@ namespace ProniaApplication.Services.Implementations
                 }
                 cookiesVM = JsonConvert.DeserializeObject<List<BasketCookieItemVM>>(cookie);
 
-
-
-                foreach (BasketCookieItemVM item in cookiesVM)
+                basketVM = await _context.Products.Where(p => cookiesVM.Select(c => c.Id).Contains(p.Id)).Select(p => new BasketItemVM
                 {
-                    Product product = await _context.Products.Include(p => p.productsImages.Where(pi => pi.IsPrimary == true)).FirstOrDefaultAsync(p => p.Id == item.Id);
-                    if (product != null)
-                    {
-                        basketVM.Add(new BasketItemVM
-                        {
-                            Id = product.Id,
-                            Name = product.Name,
-                            Image = product.productsImages[0].ImageURL,
-                            Count = item.Count,
-                            Subtotal = product.Price * item.Count,
-                            Price = product.Price
-                        });
+                    Id = p.Id,
+                    Name = p.Name,
+                    Image = p.productsImages[0].ImageURL,
+                    Price = p.Price
+                }).ToListAsync();
 
-                    }
-                }
-                
+                basketVM.ForEach(bi =>
+                {
+                    bi.Count = cookiesVM.FirstOrDefault(c => c.Id == bi.Id).Count;
+                    bi.Subtotal = bi.Count * bi.Price;
+                });
+
+                //foreach (BasketCookieItemVM item in cookiesVM)
+                //{
+                //    Product product = await _context.Products.Include(p => p.productsImages.Where(pi => pi.IsPrimary == true)).FirstOrDefaultAsync(p => p.Id == item.Id);
+                //    if (product != null)
+                //    {
+                //        basketVM.Add(new BasketItemVM
+                //        {
+                //            Id = product.Id,
+                //            Name = product.Name,
+                //            Image = product.productsImages[0].ImageURL,
+                //            Count = item.Count,
+                //            Subtotal = product.Price * item.Count,
+                //            Price = product.Price
+                //        });
+
+                //    }
+                //}
+
             }
             return basketVM;
         }
